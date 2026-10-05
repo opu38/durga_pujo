@@ -15,6 +15,10 @@ export const pool =
   globalForDb.__arenaNextJsPostgresqlPool ??
   new Pool({
     connectionString: databaseUrl,
+    connectionTimeoutMillis: 10000,
+    ssl: /\.render\.com/.test(databaseUrl)
+      ? { rejectUnauthorized: false }
+      : undefined,
   });
 
 if (process.env.NODE_ENV !== "production") {
